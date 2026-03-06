@@ -7,9 +7,11 @@ import ProductCard from './ProductCard';
 
 interface Props {
   meal: Meal;
+  pinnedIndices: Set<number>;
+  onTogglePin: (index: number) => void;
 }
 
-export default function MealPlan({ meal }: Props) {
+export default function MealPlan({ meal, pinnedIndices, onTogglePin }: Props) {
   return (
     <Box sx={{ mb: 2 }}>
       <Divider sx={{ mb: 1.5 }}>
@@ -21,7 +23,12 @@ export default function MealPlan({ meal }: Props) {
         />
       </Divider>
       {meal.items.map((product, i) => (
-        <ProductCard key={`${product.id}-${i}`} product={product} />
+        <ProductCard
+          key={`${product.id}-${i}`}
+          product={product}
+          isPinned={pinnedIndices.has(i)}
+          onTogglePin={() => onTogglePin(i)}
+        />
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 0.5 }}>
         <Typography variant="caption" color="text.secondary">

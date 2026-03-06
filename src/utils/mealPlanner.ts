@@ -114,6 +114,97 @@ function generateDinner(mains: Product[], sides: Product[]): Product[] {
   return items;
 }
 
+export interface PinnedConfig {
+  lunch: Set<number>;
+  dinner: Set<number>;
+}
+
+function pickForSlots(
+  originalItems: Product[],
+  pinnedIndices: Set<number>,
+  mains: Product[],
+  sides: Product[],
+): Product[] {
+  const items = [...originalItems];
+  for (let i = 0; i < items.length; i++) {
+    if (pinnedIndices.has(i)) continue;
+    const cat = categorize(originalItems[i]);
+    const pool = cat === 'main' ? mains : sides;
+    if (pool.length > 0) items[i] = weightedPickByProtein(pool);
+  }
+  return items;
+}
+
+export function generateDailyPlanWithPinned(
+  currentPlan: DailyPlan,
+  pinned: PinnedConfig,
+): DailyPlan {
+  const allPinnedLunch = pinned.lunch.size >= currentPlan.lunch.items.length;
+  const allPinnedDinner = pinned.dinner.size >= currentPlan.dinner.items.length;
+
+  if (allPinnedLunch && allPinnedDinner) return currentPlan;
+
+  const mains = products.filter((p) => categorize(p) === 'main');
+  const sides = products.filter((p) => categorize(p) === 'side');
+
+  let bestPlan: DailyPlan | null = null;
+  let bestScore = Infinity;
+
+  const iterations = products.length > 0 ? 1000 : 0;
+
+  for (let i = 0; i < iterations; i++) {
+    const lunchItems = allPinnedLunch
+      ? currentPlan.lunch.items
+      : pickForSlots(currentPlan.lunch.items, pinned.lunch, mains, sides);
+    const dinnerItems = allPinnedDinner
+      ? currentPlan.dinner.items
+      : pickForSlots(currentPlan.dinner.items, pinned.dinner, mains, sides);
+
+    const allItems = [...lunchItems, ...dinnerItems];
+    const totals = sumTotals(allItems);
+
+    if (totals.calories < 1700 || totals.calories > 2300) continue;
+    if (totals.carbs > PFC_TARGETS.carbs || totals.fat > PFC_TARGETS.fat) continue;
+
+    const s = score(totals);
+    if (s < bestScore) {
+      bestScore = s;
+      bestPlan = {
+        lunch: {
+          type: 'lunch',
+          label: '昼食（軽め）',
+          items: lunchItems,
+          totals: sumTotals(lunchItems),
+        },
+        dinner: {
+          type: 'dinner',
+          label: '夕食（しっかり）',
+          items: dinnerItems,
+          totals: sumTotals(dinnerItems),
+        },
+        totals,
+      };
+    }
+  }
+
+  if (!bestPlan) {
+    const lunchItems = allPinnedLunch
+      ? currentPlan.lunch.items
+      : pickForSlots(currentPlan.lunch.items, pinned.lunch, mains, sides);
+    const dinnerItems = allPinnedDinner
+      ? currentPlan.dinner.items
+      : pickForSlots(currentPlan.dinner.items, pinned.dinner, mains, sides);
+    const allItems = [...lunchItems, ...dinnerItems];
+    bestPlan = {
+      lunch: { type: 'lunch', label: '昼食（軽め）', items: lunchItems, totals: sumTotals(lunchItems) },
+      dinner: { type: 'dinner', label: '夕食（しっかり）', items: dinnerItems, totals: sumTotals(dinnerItems) },
+      totals: sumTotals(allItems),
+    };
+  }
+
+  return bestPlan;
+}
+
 export function generateDailyPlan(): DailyPlan {
   const mains = products.filter((p) => categorize(p) === 'main');
   const sides = products.filter((p) => categorize(p) === 'side');
