@@ -56,6 +56,11 @@ function sumTotals(items: Product[]): NutritionTotals {
   );
 }
 
+function hasDuplicateNames(items: Product[]): boolean {
+  const names = items.map((p) => p.name);
+  return new Set(names).size !== names.length;
+}
+
 function score(totals: NutritionTotals): number {
   const pUnder = totals.protein < PFC_TARGETS.protein
     ? ((PFC_TARGETS.protein - totals.protein) / PFC_TARGETS.protein) * 20
@@ -94,20 +99,22 @@ function generateLunch(mains: Product[], sides: Product[]): Product[] {
   return [mainItem];
 }
 
-function generateDinner(mains: Product[], sides: Product[]): Product[] {
+function generateDinner(mains: Product[], sides: Product[], excludeNames: Set<string> = new Set()): Product[] {
   const targetCal = PFC_TARGETS.calories * DINNER_RATIO;
+  const availMains = mains.filter((p) => !excludeNames.has(p.name));
+  const availSides = sides.filter((p) => !excludeNames.has(p.name));
   const items: Product[] = [];
 
-  const mainItems = weightedPickNByProtein(mains, 1 + Math.floor(Math.random() * 2));
+  const mainItems = weightedPickNByProtein(availMains, 1 + Math.floor(Math.random() * 2));
   items.push(...mainItems);
 
-  const remainingSides = sides.filter((s) => !items.includes(s));
+  const remainingSides = availSides.filter((s) => !items.some((i) => i.name === s.name));
   const sideItems = weightedPickNByProtein(remainingSides, 1 + Math.floor(Math.random() * 2));
   items.push(...sideItems);
 
   const total = items.reduce((s, p) => s + p.calories, 0);
   if (total < targetCal * 0.5) {
-    const extra = sides.filter((s) => !items.includes(s));
+    const extra = availSides.filter((s) => !items.some((i) => i.name === s.name));
     if (extra.length > 0) items.push(weightedPickByProtein(extra));
   }
 
@@ -124,13 +131,22 @@ function pickForSlots(
   pinnedIndices: Set<number>,
   mains: Product[],
   sides: Product[],
+  excludeNames: Set<string> = new Set(),
 ): Product[] {
+  const usedNames = new Set(excludeNames);
+  for (let i = 0; i < originalItems.length; i++) {
+    if (pinnedIndices.has(i)) usedNames.add(originalItems[i].name);
+  }
+
   const items = [...originalItems];
   for (let i = 0; i < items.length; i++) {
     if (pinnedIndices.has(i)) continue;
     const cat = categorize(originalItems[i]);
-    const pool = cat === 'main' ? mains : sides;
-    if (pool.length > 0) items[i] = weightedPickByProtein(pool);
+    const pool = (cat === 'main' ? mains : sides).filter((p) => !usedNames.has(p.name));
+    if (pool.length > 0) {
+      items[i] = weightedPickByProtein(pool);
+      usedNames.add(items[i].name);
+    }
   }
   return items;
 }
@@ -156,11 +172,14 @@ export function generateDailyPlanWithPinned(
     const lunchItems = allPinnedLunch
       ? currentPlan.lunch.items
       : pickForSlots(currentPlan.lunch.items, pinned.lunch, mains, sides);
+    const lunchNames = new Set(lunchItems.map((p) => p.name));
     const dinnerItems = allPinnedDinner
       ? currentPlan.dinner.items
-      : pickForSlots(currentPlan.dinner.items, pinned.dinner, mains, sides);
+      : pickForSlots(currentPlan.dinner.items, pinned.dinner, mains, sides, lunchNames);
 
     const allItems = [...lunchItems, ...dinnerItems];
+    if (hasDuplicateNames(allItems)) continue;
+
     const totals = sumTotals(allItems);
 
     if (totals.calories < 1700 || totals.calories > 2300) continue;
@@ -191,9 +210,10 @@ export function generateDailyPlanWithPinned(
     const lunchItems = allPinnedLunch
       ? currentPlan.lunch.items
       : pickForSlots(currentPlan.lunch.items, pinned.lunch, mains, sides);
+    const lunchNames = new Set(lunchItems.map((p) => p.name));
     const dinnerItems = allPinnedDinner
       ? currentPlan.dinner.items
-      : pickForSlots(currentPlan.dinner.items, pinned.dinner, mains, sides);
+      : pickForSlots(currentPlan.dinner.items, pinned.dinner, mains, sides, lunchNames);
     const allItems = [...lunchItems, ...dinnerItems];
     bestPlan = {
       lunch: { type: 'lunch', label: '昼食（軽め）', items: lunchItems, totals: sumTotals(lunchItems) },
@@ -216,8 +236,12 @@ export function generateDailyPlan(): DailyPlan {
 
   for (let i = 0; i < iterations; i++) {
     const lunchItems = generateLunch(mains, sides);
-    const dinnerItems = generateDinner(mains, sides);
+    const lunchNames = new Set(lunchItems.map((p) => p.name));
+    const dinnerItems = generateDinner(mains, sides, lunchNames);
     const allItems = [...lunchItems, ...dinnerItems];
+
+    if (hasDuplicateNames(allItems)) continue;
+
     const totals = sumTotals(allItems);
 
     if (totals.calories < 1700 || totals.calories > 2300) continue;
@@ -246,7 +270,9 @@ export function generateDailyPlan(): DailyPlan {
 
   if (!bestPlan) {
     const fallbackLunch = mains.length > 0 ? [weightedPickByProtein(mains)] : [];
-    const fallbackDinner = mains.length > 1 ? weightedPickNByProtein(mains, 2) : mains;
+    const usedNames = new Set(fallbackLunch.map((p) => p.name));
+    const remainingMains = mains.filter((p) => !usedNames.has(p.name));
+    const fallbackDinner = remainingMains.length > 0 ? weightedPickNByProtein(remainingMains, 2) : [];
     const allItems = [...fallbackLunch, ...fallbackDinner];
     bestPlan = {
       lunch: {
