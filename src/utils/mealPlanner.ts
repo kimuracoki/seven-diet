@@ -44,7 +44,11 @@ function score(totals: NutritionTotals): number {
   const fErr = Math.abs(totals.fat - PFC_TARGETS.fat) / PFC_TARGETS.fat;
   const cErr = Math.abs(totals.carbs - PFC_TARGETS.carbs) / PFC_TARGETS.carbs;
   const calErr = Math.abs(totals.calories - PFC_TARGETS.calories) / PFC_TARGETS.calories;
-  return pErr * 2 + fErr + cErr + calErr;
+
+  const fOver = totals.fat > PFC_TARGETS.fat ? (totals.fat - PFC_TARGETS.fat) / PFC_TARGETS.fat * 10 : 0;
+  const cOver = totals.carbs > PFC_TARGETS.carbs ? (totals.carbs - PFC_TARGETS.carbs) / PFC_TARGETS.carbs * 10 : 0;
+
+  return pErr * 2 + fErr + cErr + calErr + fOver + cOver;
 }
 
 function generateLunch(mains: Product[], sides: Product[]): Product[] {
@@ -101,6 +105,7 @@ export function generateDailyPlan(): DailyPlan {
     const totals = sumTotals(allItems);
 
     if (totals.calories < 1700 || totals.calories > 2300) continue;
+    if (totals.carbs > PFC_TARGETS.carbs || totals.fat > PFC_TARGETS.fat) continue;
 
     const s = score(totals);
     if (s < bestScore) {
