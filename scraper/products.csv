@@ -1,0 +1,151 @@
+id,name,price,image_url,calories,protein,fat,carbs,category
+042025,手巻おにぎり　おかか,192,https://img-afd.7api-01.dp1.sej.co.jp/item-image/042025/7D1948504E15E252AD881EC77106E1AA.jpg,176.0,4.4,0.9,38.6,おにぎり
+041916,手巻おにぎり　鶏そぼろ,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041916/9049CCBCD798B40858EEBD85606B19F6.jpg,199.0,5.5,2.8,38.8,おにぎり
+041956,手巻おにぎり　北海道産昆布,197,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041956/6FECF48DA60AA6DE5FBA4B9C8F0E6738.jpg,176.0,3.3,1.4,38.7,おにぎり
+041917,手巻おにぎり　熟成仕立て紀州南高梅,197,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041917/CC82C1A3F5F9357DD9AADE17EBF82E60.jpg,166.0,2.9,0.8,37.8,おにぎり
+041910,手巻おにぎり　具たっぷり辛子明太子,232,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041910/007FBFEC1BE98EBF55071112CDC089FB.jpg,173.0,5.1,0.8,37.2,おにぎり
+041909,手巻おにぎり　ツナマヨネーズ,197,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041909/5A8170082B23485EEA569269894651FF.jpg,258.0,5.2,10.6,36.5,おにぎり
+041521,大きなおむすび和風　　シーチキンマヨネーズ,275,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041521/A26B8C04E3EC41F61E29F817E01F04A4.jpg,343.0,7.1,11.1,54.8,おにぎり
+041682,混ぜ飯おむすび　　　　小海老天まぶし,211,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041682/A4ED6AF58BBC3CC45378C76CF1A6D931.jpg,272.0,4.9,5.8,51.1,おにぎり
+041517,直巻おむすび　焼しゃけ,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041517/AAFCFD60BC719402A15FBDE853DAE5A5.jpg,179.0,4.7,1.4,37.9,おにぎり
+042023,せいろ蒸し　赤飯おこわおむすび,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/042023/EAC62355FAEEE0146618078BFAC0B5B5.jpg,224.0,5.3,1.6,48.0,おにぎり
+041914,旨さ相盛おむすび　高菜と明太子,289,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041914/958055DC568E86B37FB94BA44CF6300A.jpg,257.0,6.2,1.9,55.4,おにぎり
+041912,旨さ相盛おむすび　卵黄と肉そぼろ,289,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041912/4414FF197FB2C4E1DDB9DF9921B33E99.jpg,317.0,8.9,6.3,57.6,おにぎり
+041623,おおきなおむすび　昆布ご飯とツナマヨネーズ,246,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041623/90054D585DD84F9A7F24500413FB2E3F.jpg,345.0,6.4,11.1,55.4,おにぎり
+041807,塩むすび,157,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041807/A23271CD729B9AD355B69DF5C5199ECB.jpg,173.0,2.6,0.9,39.5,おにぎり
+041735,わかめご飯おむすび（三陸産わかめ使用）,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041735/CDD30F7613CA117693E75E0E97DA54FA.jpg,176.0,3.4,1.3,38.5,おにぎり
+042021,若鶏のチキン南蛮弁当,721,https://img-afd.7api-01.dp1.sej.co.jp/item-image/042021/A772C9F0BF22D5E5D51F4FD7E063180B.jpg,805.0,20.4,37.2,98.7,お弁当
+041230,若鶏の唐揚げ弁当,734,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041230/70661CD401ACAB42C79998DF94A1B553.jpg,785.0,34.3,27.0,103.4,お弁当
+041147,若鶏の唐揚げ弁当,754,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041147/76AAC99E04C85A4FA73F8450066325FB.jpg,719.0,34.2,32.5,74.1,お弁当
+041705,おかずぎっしり海苔弁当,743,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041705/77B0A2663AD82C3CD2E510C1A109A405.jpg,949.0,25.0,35.8,133.8,お弁当
+040699,お好みおかず弁当,538,https://img-afd.7api-01.dp1.sej.co.jp/item-image/040699/2398A5B3AE2A0C110D44B75B3816D148.jpg,690.0,19.6,23.5,103.1,お弁当
+042020,タルだく唐揚げ丼,754,https://img-afd.7api-01.dp1.sej.co.jp/item-image/042020/E1FBB628EE062AF970AC22014413D06C.jpg,990.0,36.8,48.3,103.2,お弁当
+042031,直火炙りのゴロっと焼豚　チャーハン,497,https://img-afd.7api-01.dp1.sej.co.jp/item-image/042031/4CE5803954876E954EAFF17083E6B239.jpg,650.0,19.5,27.6,82.2,お弁当
+041971,旨辛麻婆チャーハン,754,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041971/1D0ED403179386C1C1F558CB50FF17E4.jpg,921.0,32.4,32.9,125.3,お弁当
+041970,ふんわり玉子のオムハヤシ,754,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041970/04B92ECB2A4A370E2A041DF8CAB995A7.jpg,629.0,16.1,18.2,101.4,お弁当
+041813,８品目の中華丼,646,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041813/6AFB6F0049B3F9F0BC9209DE0365D3C8.jpg,498.0,14.3,9.9,90.4,お弁当
+041571,つゆまで旨い　牛丼,646,https://img-afd.7api-01.dp1.sej.co.jp/item-image/041571/3CEF6D487AEDE130D5C85060A4D1FCDF.jpg,565.0,18.6,17.9,84.4,お弁当
+051944,ゆめかわピーチコッぺ,281,https://img-afd.7api-01.dp1.sej.co.jp/item-image/051944/55FF67396C1CE86B2B196E27574CD903.jpg,244.0,4.2,12.2,29.9,サンドイッチ・ロールパン
+051969,いちごホイップ＆クリームチーズパン,322,https://img-afd.7api-01.dp1.sej.co.jp/item-image/051969/B826C1EA2C2333CCC1378E989B600717.jpg,280.0,6.2,15.1,30.4,サンドイッチ・ロールパン
+053325,玉子焼きミックスサンド,421,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053325/874B6344869A0701B037BF068FDA8041.jpg,353.0,11.5,20.1,32.3,サンドイッチ・ロールパン
+053516,ブルーベリーサンド,354,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053516/6C4242590AB84EFC19735A2E750E30FF.jpg,337.0,6.8,16.1,42.0,サンドイッチ・ロールパン
+053354,こだわりの旨みソーセージ　ホットドッグ,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053354/288508FBC5EB0E66C5CCC231DE091AC7.jpg,263.0,9.2,15.4,22.4,サンドイッチ・ロールパン
+053343,たんぱく質が摂れるチキン＆チリ,432,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053343/04100A790AAC034F1F37E66496FCA2ED.jpg,280.0,25.8,9.6,24.8,サンドイッチ・ロールパン
+053341,コク旨たまごサラダロール,181,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053341/117904DC60191B01F3B11224BF4373FB.jpg,343.0,7.9,23.8,24.9,サンドイッチ・ロールパン
+053431,ミニロール（たまご＆ハムチーズ）,292,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053431/1D2469E60F3055C321D1C361CDAF559D.jpg,284.0,9.2,14.2,30.8,サンドイッチ・ロールパン
+053539,キューバサンド仕立て　スパイシーポーク,430,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053539/F5980EC45836F7C92D920D3EC242DB1B.jpg,304.0,17.7,14.3,27.4,サンドイッチ・ロールパン
+053525,ラップデリ　グリルチキンのシーザーサラダ,322,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053525/FC69E5746430226E38471A7A7201EFC4.jpg,380.0,12.1,24.5,29.5,サンドイッチ・ロールパン
+053491,チリチーズドッグ,356,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053491/3C03BC0EF7FDDED9776BCE722DA2DD06.jpg,349.0,14.8,20.9,26.7,サンドイッチ・ロールパン
+053436,たんぱく質が摂れるチキンロール,421,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053436/9B418DF6A0CCF53F1A47CCC08B7F2A51.jpg,241.0,27.1,5.2,22.9,サンドイッチ・ロールパン
+053372,静岡限定シーチキンサラダロール,192,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053372/ACD66E736C707763678602BF6E6691FE.jpg,257.0,9.2,13.9,24.2,サンドイッチ・ロールパン
+053268,ソーセージエッグマフィン,300,https://img-afd.7api-01.dp1.sej.co.jp/item-image/053268/1D93205B78A5BE81B4CA12F88CC1CF32.jpg,355.0,14.6,18.9,32.2,サンドイッチ・ロールパン
+052956,バゲットサンド　パストラミ＆クリームチーズ,322,https://img-afd.7api-01.dp1.sej.co.jp/item-image/052956/6DD277400BAB0AF6CEC6BD97B4381895.jpg,296.0,10.3,15.2,30.2,サンドイッチ・ロールパン
+101575,春を味わうコールスローサラダ,257,https://img-afd.7api-01.dp1.sej.co.jp/item-image/101575/6CC858A2015690760F58F8088F61F00B.jpg,122.0,3.0,8.2,11.2,サラダ
+104883,５種具材のさっぱり春雨サラダ,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104883/AF07C78AA9499851CBC3DF04B4A0FCF7.jpg,142.0,3.6,4.4,24.0,サラダ
+104882,７種具材のお豆腐とひじきの煮物,235,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104882/05A2948D6DD16F61F04B31BF004B7413.jpg,110.0,8.0,5.2,10.1,サラダ
+104450,冷たいまま食べるチキン南蛮,322,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104450/6203DD6D944E819FE26115B95FF1F1A1.jpg,394.0,13.4,24.3,31.0,サラダ
+104954,直火焼きさばのおろしぽん酢,300,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104954/0401685C8A85C15029EDA19C0CFB0539.jpg,141.0,9.9,7.4,9.8,サラダ
+104953,たことブロッコリー手摘みバジルのサラダ,300,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104953/EF4D1BC8BC827ED2E8AF6F55C3EA777A.jpg,92.0,4.9,4.7,9.0,サラダ
+106606,たんぱく質が摂れる鶏むね肉サラダ,473,https://img-afd.7api-01.dp1.sej.co.jp/item-image/106606/C5150481D284CDD304DEE1688982ECA3.jpg,199.0,21.8,10.9,4.4,サラダ
+107314,甘辛鶏唐揚げのパスタサラダ,365,https://img-afd.7api-01.dp1.sej.co.jp/item-image/107314/D63E3741BF443C1182960AFEB663DF55.jpg,407.0,17.1,16.2,50.4,サラダ
+107309,豚しゃぶパスタサラダ,397,https://img-afd.7api-01.dp1.sej.co.jp/item-image/107309/ADC4C39453381DA9DD256F85CADF4FF3.jpg,369.0,16.6,16.6,40.5,サラダ
+104540,油淋鶏サラダ,430,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104540/70C5B002BEAC5AD17AD0E761DDDF64F4.jpg,279.0,16.2,13.2,24.8,サラダ
+100008,たんぱく質が摂れる２種カニカマと玉子のサラダ,430,https://img-afd.7api-01.dp1.sej.co.jp/item-image/100008/66C9E2C595E817A4E901A96D37D9FB23.jpg,164.0,13.9,8.5,9.4,サラダ
+100580,トマトとレタスのイタリアンサラダ,365,https://img-afd.7api-01.dp1.sej.co.jp/item-image/100580/AE42492B6D16B724EF9686582CA766D0.jpg,139.0,2.4,11.0,8.6,サラダ
+101872,７プレミアム　ポテトサラダ,149,https://img-afd.7api-01.dp1.sej.co.jp/item-image/101872/A70B79083C4CD8F0FBF7A09DF77055F3.jpg,163.0,1.8,9.7,18.0,サラダ
+101862,７プレミアム　明太ポテトサラダ,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/101862/EEFEE29FA0B75E1B09CF8B3E9CF16996.jpg,122.0,2.6,7.4,11.5,サラダ
+101856,７プレミアム　ベーコンポテトサラダ,171,https://img-afd.7api-01.dp1.sej.co.jp/item-image/101856/3B8B9E5A1ACC87CB1B42570777A302BB.jpg,148.0,3.4,8.7,14.5,サラダ
+102930,７プレミアム　マカロニサラダ,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/102930/E74E612F938B777E3AEC3B68F5FE5B24.jpg,208.0,4.8,15.8,12.3,サラダ
+101914,７プレミアム　　　　　たまごサラダ,149,https://img-afd.7api-01.dp1.sej.co.jp/item-image/101914/9F418ADD73E4426C636FFC9D9AB35363.jpg,211.0,7.6,19.1,2.3,サラダ
+101888,７プレミアム　ごぼうサラダ,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/101888/12C4152B2D218D30883581182EC3132A.jpg,142.0,1.6,10.9,10.6,サラダ
+250044,７プレミアム　大根サラダ,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/250044/045CC569ACA89F547858056EF11FF7F2.jpg,21.0,0.7,0.1,5.5,サラダ
+251185,７プレミアム　レタスサラダ,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/251185/3C0AD4187D6E984C4F887B1EC8D3678A.jpg,12.0,0.7,0.1,2.7,サラダ
+250117,７プレミアム　千切りキャベツ,127,https://img-afd.7api-01.dp1.sej.co.jp/item-image/250117/35265324ECF13133EA02A95E3C0AF22A.jpg,35.0,2.0,0.3,7.8,サラダ
+250289,７プレミアムコールスロー,138,https://img-afd.7api-01.dp1.sej.co.jp/item-image/250289/E900A5060427E70F3AC1AB3E2683333B.jpg,45.0,1.9,0.3,10.1,サラダ
+250836,７プレミアムパイナップル,225,https://img-afd.7api-01.dp1.sej.co.jp/item-image/250836/40914546629A53EBEE7841D00CA49323.jpg,54.0,0.6,0.1,13.7,サラダ
+250328,７プレミアム皮むきりんご,192,https://img-afd.7api-01.dp1.sej.co.jp/item-image/250328/088981CE2FF1E9AD88C3776A99A2D34E.jpg,46.0,0.2,0.1,11.5,サラダ
+101073,鶏むね肉の大葉焼鳥　梅だれ,397,https://img-afd.7api-01.dp1.sej.co.jp/item-image/101073/63B2CBBDFDE7B7B9D59AB4AA3F5D4033.jpg,174.0,30.5,4.6,2.7,惣菜
+104798,つるもち太麺春雨　鶏白湯,430,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104798/0C2E6BC9BB1833B779DE1CA2696A3B3D.jpg,244.0,12.5,7.0,35.1,惣菜
+104804,７プレミアム　銀鮭の塩焼切落し,322,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104804/1FACBCEC160058A29F79C504EC906D7C.jpg,205.0,14.9,16.1,0.1,惣菜
+103085,焼き餃子,322,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103085/D1BF9B0AC2B15C5CFE948D4731BFFFBE.jpg,380.0,12.6,19.3,40.3,惣菜
+104252,枝豆,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104252/82B87AB28955D5B50C976BEE77F8A377.jpg,94.0,8.0,4.1,8.4,惣菜
+103540,合わせ味噌仕立ての具だくさん豚汁,387,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103540/39C47EED99A91E53F46AB2682821DACB.jpg,155.0,11.1,5.1,18.8,惣菜
+103530,具だくさん赤だし　　豚汁,443,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103530/C7AE0B71181CB44C5544AB7A087F0EF4.jpg,192.0,18.3,8.6,12.6,惣菜
+103282,国産黄金生姜　ぽかぽか和風スープ,354,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103282/D5C71E3A4CC84685A8AA1F138066F9D2.jpg,120.0,8.2,3.5,15.3,惣菜
+100819,こく旨キムチ鍋,538,https://img-afd.7api-01.dp1.sej.co.jp/item-image/100819/72A4235B3C7C4765534742EACB05B134.jpg,247.0,22.3,12.8,13.7,惣菜
+104551,鶏もも肉の醤油から揚げ　マヨネーズ付き,430,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104551/5E5C411B38AF1ECFB39950FEFF2D3CBD.jpg,346.0,22.2,23.1,12.5,惣菜
+104544,香ばし炒めの豚ロース生姜焼き,430,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104544/F436464A04146AD0921000471DE282FE.jpg,185.0,20.0,6.0,13.7,惣菜
+104423,プルコギチャプチェ,387,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104423/AA08DE31D4AB0D2AE79C0FCA5C60AC79.jpg,203.0,5.7,7.4,29.8,惣菜
+104224,たんぱく質が摂れるレバニラ炒め,387,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104224/D7F052B5D031EAF721CCDBF99AE501BF.jpg,188.0,28.0,5.9,6.6,惣菜
+104222,ほうれん草のチーズ焼き,430,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104222/6D21F317C59EC3AE3E8DEC102E32F16F.jpg,264.0,13.2,12.1,27.1,惣菜
+104184,香ばし肉野菜＆ビーフン炒め,387,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104184/08260CB1F9A32542CDAD7F6B0F0DF73F.jpg,262.0,8.1,13.0,29.4,惣菜
+104669,７プレミアム福神漬,106,https://img-afd.7api-01.dp1.sej.co.jp/item-image/104669/8CA423CF77203C0A7F48A2D8EE345660.jpg,105.0,2.0,0.1,25.3,惣菜
+100384,７プレミアム　紅しょうが,106,https://img-afd.7api-01.dp1.sej.co.jp/item-image/100384/493B85746125738A916E77252371F550.jpg,7.0,0.1,0.2,1.4,惣菜
+103187,７プレミアム　味付メンマ７０ｇ,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103187/A6C68E888B2B89DE26A4FAB5BA6379F6.jpg,32.0,1.3,1.5,4.2,惣菜
+103716,７プレミアム　浅漬盛合せ,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103716/0CA8033E0AD30885D9878D4B3D6A9724.jpg,14.0,0.5,0.1,3.0,惣菜
+103690,７プレミアム　ぬか漬盛合せ,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103690/67B6685CBA5CDE8CF198C7DE24AD3D4A.jpg,14.0,0.5,0.1,3.0,惣菜
+103531,７プレミアム　紀州南高梅うす塩味,322,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103531/AB6900BFD7934C5F2136EA35AB77296D.jpg,83.0,1.1,0.3,20.0,惣菜
+103691,７プレミアム　本漬たくあん　ミニ,171,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103691/D9205AE1E4F7BC1189435D58F6551B17.jpg,71.0,0.6,0.2,18.0,惣菜
+103686,７プレミアム茶碗蒸し,279,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103686/CBBE9A6940F0BD51F3F498E1A65DCD36.jpg,81.0,8.1,3.5,4.5,惣菜
+103677,７プレミアム茶碗蒸し,279,https://img-afd.7api-01.dp1.sej.co.jp/item-image/103677/E1CFF01CE61EFDBD88DABB321F9BA525.jpg,83.0,7.6,4.4,3.7,惣菜
+290590,７ＰＧ　金の食パン　　４枚入,343,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290590/125C4883A8D2295CE4F57D100B6808EF.jpg,261.0,8.8,5.3,45.4,パン
+290514,７ＰＧ　金の食パン　　２枚入,181,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290514/FCF20F5CD16367CFC0949130C7527FDE.jpg,261.0,8.8,5.3,45.4,パン
+290586,７プレミアム　もっちり食パン　６枚入,181,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290586/9D655C41EB7175F4808443B24E108A50.jpg,161.0,6.5,1.7,30.6,パン
+290067,パスコ　超熟　６枚スライス,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290067/669BEA6EF85014245DAB50D75E2AD434.jpg,164.0,4.9,2.7,30.5,パン
+290572,７プレミアム　レーズン食パン　２枚入,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290572/6779421B83597EE6D7AED82BB969CE54.jpg,161.0,4.6,2.6,30.9,パン
+290102,７ザ・プライス　　　　しっとり食パン　６枚入,127,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290102/E2F431DA4F93CDFC61C930C01870B968.jpg,152.0,5.9,1.5,29.4,パン
+290110,７Ｐパン・オ・ショコラダブルチョコ　３個入,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290110/3119463A931DF505650F489F174CB0E9.jpg,146.0,2.3,6.6,19.8,パン
+290086,７Ｐ　しみしみ塩キャラメル蒸しパン４個入,181,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290086/6F2DDCC2E140F865593CA47617AEB252.jpg,103.0,1.7,0.3,23.7,パン
+290557,７Ｐマーガリン入り　　バターロール４個入,149,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290557/632595672A55E4F7795710EB2DE510B4.jpg,155.0,2.6,8.7,16.8,パン
+290163,７Ｐ　マーガリン入り　レーズンバターロール,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290163/32357954FC9DE8C2043A04C08BE899DD.jpg,160.0,2.3,8.3,19.4,パン
+290105,７Ｐマーガリン入り　　黒糖ロール４個入,149,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290105/041205DFF79430BE6C9DB38286FBF276.jpg,156.0,2.5,7.9,19.1,パン
+290432,７Ｐ　チョコミニ　　　クロワッサン５個入,192,https://img-afd.7api-01.dp1.sej.co.jp/item-image/290432/43BC5DEE6FF2B15F3EDC882D754FEB30.jpg,89.0,1.3,5.3,9.3,パン
+303709,いちごジャム＆チーズクリームメロンパン,203,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303709/6A7FB23D239606A5CC163C98D23C34A9.jpg,308.0,5.9,9.8,49.8,パン
+303693,７プレミアム　２種のチョコクリームパン,171,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303693/EFAB29F2A6B664B201206E82E53FDB05.jpg,342.0,8.7,12.4,50.4,パン
+303707,デニッシュサンド　練乳バニラクリーム,214,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303707/179B5CCC3D56241E5F59800B2C52DED4.jpg,355.0,4.2,22.0,35.5,パン
+303691,７Ｐ　抹茶ラテパンケーキ２個入,160,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303691/1E104859AF1D8C7342B2FD3E4822A8E5.jpg,220.0,3.9,9.2,30.5,パン
+303690,７Ｐ　さくらのケーキ,149,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303690/2F5329AA82DE4ABCD52E3010EDB05866.jpg,276.0,3.8,7.9,47.7,パン
+302970,ランチパック　　深煎りピーナッツ,172,https://img-afd.7api-01.dp1.sej.co.jp/item-image/302970/9632E471DEA28FE2BB5FE60E098498F9.jpg,182.0,3.7,10.0,19.2,パン
+303703,ハムチーズ揚げパン,181,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303703/BDAC9E306C4B8F5403A27563D08EA28A.jpg,275.0,6.3,15.9,27.1,パン
+303685,厚切りハムカツパン　　からしマヨネーズ,268,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303685/834F1D0024B0C5A96B21A707C12642F9.jpg,417.0,9.7,24.0,41.2,パン
+303431,さっぱりタルタルソースのフィッシュバーガー,268,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303431/3414220BF981D6609ABA8AABDBBE1369.jpg,504.0,12.2,30.9,45.6,パン
+303270,北海道産じゃがいものコロッケパン,192,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303270/FD85E6190A65215B0643E6FA54A04DB1.jpg,420.0,7.1,20.3,53.5,パン
+303220,粗挽きポークフランク粒マスタードマヨ使用,216,https://img-afd.7api-01.dp1.sej.co.jp/item-image/303220/61E7865472EDCFE4541E801BFDE51CB1.jpg,401.0,10.5,23.7,37.0,パン
+301617,たっぷりルウの欧風カレ―パン,171,https://img-afd.7api-01.dp1.sej.co.jp/item-image/301617/205167914A40D0D1837B2F5F67FEF9F6.jpg,312.0,6.6,16.0,36.2,パン
+091194,冷しそば　天かす＆わかめ,354,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091194/31D9FA87D7413C805F2E2FF8C4FE4BB8.jpg,276.0,8.0,11.7,35.9,そば・うどん・中華麺
+090501,北海道産玄蕎麦使用ざるそば,486,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090501/2A76CADB147BC60B8F779B12ABEC19CB.jpg,323.0,15.0,3.0,61.8,そば・うどん・中華麺
+090294,北海道産玄蕎麦使用ざるそば（静岡）,529,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090294/A782B8CCE7A2F3E4607CEECEE73CDD33.jpg,332.0,14.9,2.9,64.4,そば・うどん・中華麺
+095514,静岡限定　のりおろしそば,464,https://img-afd.7api-01.dp1.sej.co.jp/item-image/095514/773022723E79090EA0DB54A192503322.jpg,365.0,13.6,6.5,66.0,そば・うどん・中華麺
+095512,岐阜の味　冷したぬきそば,540,https://img-afd.7api-01.dp1.sej.co.jp/item-image/095512/01B0744D0A6AFE38A5E8CD47F0B45B31.jpg,638.0,20.5,23.8,88.4,そば・うどん・中華麺
+090507,北海道産玄蕎麦使用　濃厚だし割りとろろそば,583,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090507/54097C6F25C3C494426E4B9708DE6EEC.jpg,338.0,14.0,4.0,64.5,そば・うどん・中華麺
+095857,冷し海老天おろしきしめん,594,https://img-afd.7api-01.dp1.sej.co.jp/item-image/095857/926465582C73F211DCA5A5A1CE1E0389.jpg,443.0,12.7,6.9,84.9,そば・うどん・中華麺
+090911,コク旨つゆの牛肉うどん,594,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090911/D2211969EBA5527F1D47CE3B3AD5FEB7.jpg,401.0,16.2,7.1,69.7,そば・うどん・中華麺
+090698,冷しぶっかけうどん,367,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090698/AF2724A79E3A00A7FBF4E74F52766CB3.jpg,593.0,7.7,14.1,110.9,そば・うどん・中華麺
+090870,コク旨カレーうどん,562,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090870/9F1E65863C119A047EFC022A2F7B4BA8.jpg,699.0,23.9,28.5,91.2,そば・うどん・中華麺
+091050,コクと旨みの玉子あんかけうどん,464,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091050/65CC4ADF1F7461919595C9E062869681.jpg,479.0,21.7,7.8,81.8,そば・うどん・中華麺
+090995,名古屋名物　味噌煮込みうどん,572,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090995/E5C0ECC100B411D6C2AE4B3808BFC64E.jpg,499.0,29.1,9.4,77.4,そば・うどん・中華麺
+091195,冷し醤油ラーメン　チャーシュー＆焦がしねぎ,354,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091195/1EA7B5EA1CB9BF4E776AAB6ECF9EA94C.jpg,231.0,8.8,5.6,37.3,そば・うどん・中華麺
+091145,期間限定　海鮮の旨み　浜ラーメン,646,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091145/BFA5554A1BCF7EDEFD8FBD0D875883AA.jpg,427.0,21.4,1.7,83.7,そば・うどん・中華麺
+091169,冷し中華,594,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091169/ACAEDA26E164C88145A86A724F5305A3.jpg,493.0,19.3,9.8,83.7,そば・うどん・中華麺
+091142,ミニ冷し中華マヨネーズ盛り,443,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091142/81B7D9B82A0ED95EC7802E2AC7165794.jpg,363.0,8.5,16.1,46.9,そば・うどん・中華麺
+091140,冷し中華マヨネーズ盛り,594,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091140/2FE087FA32BD5758E2B2517C94C04032.jpg,574.0,15.7,25.0,73.0,そば・うどん・中華麺
+095563,ミニ冷し中華,432,https://img-afd.7api-01.dp1.sej.co.jp/item-image/095563/D116DF0014212B96070767C804F95725.jpg,282.0,11.6,5.8,47.0,そば・うどん・中華麺
+091193,刀削麺仕立て　汁なし担々麺,572,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091193/B1CDB4C87E2C4DAB91F4DC2157642EF2.jpg,670.0,25.6,28.2,81.4,そば・うどん・中華麺
+090275,特製たれの豚肉焼うどん,572,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090275/28EC6712700468F16941A38E2994AB98.jpg,672.0,20.5,21.3,101.9,そば・うどん・中華麺
+095793,香ばし醤油の焼うどん,538,https://img-afd.7api-01.dp1.sej.co.jp/item-image/095793/3355469AEAA883FFC2F94BC0489D0BA4.jpg,673.0,24.1,16.2,111.9,そば・うどん・中華麺
+091064,オムそば,430,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091064/E76EEF8A0E1F8B9A970CF8ACAA3C804F.jpg,458.0,13.1,18.5,62.2,そば・うどん・中華麺
+090004,定番の味　ジューシーソース焼そば,464,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090004/1873973516E2804B9EAC442F6CE73A69.jpg,719.0,19.4,25.7,105.5,そば・うどん・中華麺
+090502,旨みあん絡む　香ばし麺のあんかけ焼そば,648,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090502/AC396CBE3EA287D891B31A345131D1B1.jpg,629.0,23.7,19.5,95.0,そば・うどん・中華麺
+091191,ツナと大根おろしの和風パスタ,464,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091191/6A84F5F21A9CFF78E940639CB6EF92DF.jpg,484.0,26.2,11.9,71.5,スパゲティ・パスタ
+090230,肉の旨味とデミグラスのコク　ミートソース,497,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090230/C5B1874DC66AABF11E2934D8E1ED27FE.jpg,533.0,20.3,14.9,82.0,スパゲティ・パスタ
+090056,ケチャップソースの大盛ナポリタン,538,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090056/CADFF270948655BC8DD0658D67DF8348.jpg,621.0,24.8,15.2,100.7,スパゲティ・パスタ
+090009,やみつきガーリック　大盛ペペロンチーノ,700,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090009/6158123C453BF9F131653D1C743BC83D.jpg,863.0,34.3,41.2,92.6,スパゲティ・パスタ
+091172,３種きのこのバター醤油パスタ,594,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091172/388EFE608E65383004C1EB3197DB6435.jpg,490.0,19.9,14.8,72.1,スパゲティ・パスタ
+091113,岐阜県産ほうれん草のトマトソースパスタ,562,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091113/61DE033E34D26AD02FD41524BE066D51.jpg,488.0,21.7,14.0,71.8,スパゲティ・パスタ
+091101,きのことチーズの旨トマトクリームパスタ,594,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091101/D321AC3DEC0686B876772E93E05CCC8A.jpg,666.0,25.3,32.4,72.2,スパゲティ・パスタ
+091041,３種きのこと鶏肉のクリームパスタ,572,https://img-afd.7api-01.dp1.sej.co.jp/item-image/091041/6FFB6A86D73DDDAFC7588D7E4B0B9A21.jpg,612.0,25.2,19.7,86.7,スパゲティ・パスタ
+090175,ツナと大根おろしの和風パスタ,518,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090175/2D71424DAE8CDDF2A6F573F82C7AF080.jpg,446.0,26.1,8.2,69.8,スパゲティ・パスタ
+090748,焦がしチーズのカルボナーラ,605,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090748/988502C5F58C9469DFFD2255D36DD7D9.jpg,757.0,29.1,38.3,76.2,スパゲティ・パスタ
+090297,完熟トマトのミートソーススパゲティ,497,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090297/2F84CBE7E7C61FF658B3EDF30AB8CA24.jpg,618.0,24.2,25.0,77.1,スパゲティ・パスタ
+090219,生パスタ　ボロネーゼ,646,https://img-afd.7api-01.dp1.sej.co.jp/item-image/090219/C745B366F3218BF6300804AB7679CE11.jpg,629.0,27.4,18.7,90.9,スパゲティ・パスタ
+095705,明太マヨパスタ　かねふく明太子使用,443,https://img-afd.7api-01.dp1.sej.co.jp/item-image/095705/9E3FE527E923E2DF65B9A308D3CB425B.jpg,660.0,24.5,18.8,102.1,スパゲティ・パスタ
