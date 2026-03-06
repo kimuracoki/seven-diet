@@ -17,13 +17,30 @@ function categorize(p: Product): 'main' | 'side' {
   return p.calories > 200 ? 'main' : 'side';
 }
 
-function pick<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
+function proteinDensity(p: Product): number {
+  return p.calories > 0 ? p.protein / p.calories : 0;
 }
 
-function pickN<T>(arr: T[], n: number): T[] {
-  const shuffled = [...arr].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, n);
+function weightedPickByProtein(arr: Product[]): Product {
+  const weights = arr.map((p) => proteinDensity(p) + 0.05);
+  const total = weights.reduce((s, w) => s + w, 0);
+  let r = Math.random() * total;
+  for (let i = 0; i < arr.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return arr[i];
+  }
+  return arr[arr.length - 1];
+}
+
+function weightedPickNByProtein(arr: Product[], n: number): Product[] {
+  const remaining = [...arr];
+  const result: Product[] = [];
+  for (let i = 0; i < n && remaining.length > 0; i++) {
+    const picked = weightedPickByProtein(remaining);
+    result.push(picked);
+    remaining.splice(remaining.indexOf(picked), 1);
+  }
+  return result;
 }
 
 function sumTotals(items: Product[]): NutritionTotals {
@@ -40,24 +57,33 @@ function sumTotals(items: Product[]): NutritionTotals {
 }
 
 function score(totals: NutritionTotals): number {
-  const pErr = Math.abs(totals.protein - PFC_TARGETS.protein) / PFC_TARGETS.protein;
+  const pUnder = totals.protein < PFC_TARGETS.protein
+    ? ((PFC_TARGETS.protein - totals.protein) / PFC_TARGETS.protein) * 20
+    : 0;
   const fErr = Math.abs(totals.fat - PFC_TARGETS.fat) / PFC_TARGETS.fat;
   const cErr = Math.abs(totals.carbs - PFC_TARGETS.carbs) / PFC_TARGETS.carbs;
   const calErr = Math.abs(totals.calories - PFC_TARGETS.calories) / PFC_TARGETS.calories;
 
-  const fOver = totals.fat > PFC_TARGETS.fat ? (totals.fat - PFC_TARGETS.fat) / PFC_TARGETS.fat * 10 : 0;
-  const cOver = totals.carbs > PFC_TARGETS.carbs ? (totals.carbs - PFC_TARGETS.carbs) / PFC_TARGETS.carbs * 10 : 0;
+  const fOver = totals.fat > PFC_TARGETS.fat
+    ? ((totals.fat - PFC_TARGETS.fat) / PFC_TARGETS.fat) * 10
+    : 0;
+  const cOver = totals.carbs > PFC_TARGETS.carbs
+    ? ((totals.carbs - PFC_TARGETS.carbs) / PFC_TARGETS.carbs) * 10
+    : 0;
 
-  return pErr * 2 + fErr + cErr + calErr + fOver + cOver;
+  return pUnder + fErr + cErr + calErr + fOver + cOver;
 }
 
 function generateLunch(mains: Product[], sides: Product[]): Product[] {
   const targetCal = PFC_TARGETS.calories * LUNCH_RATIO;
-  const mainItem = pick(mains.filter((p) => p.calories < targetCal * 0.9));
+  const calFiltered = mains.filter((p) => p.calories < targetCal * 0.9);
+  const mainItem = calFiltered.length > 0
+    ? weightedPickByProtein(calFiltered)
+    : (mains.length > 0 ? weightedPickByProtein(mains) : undefined);
+
+  if (!mainItem) return [];
+
   const candidates = sides.filter((p) => p.calories < 300);
-
-  if (!mainItem) return [pick(mains)];
-
   const remaining = targetCal - mainItem.calories;
   if (remaining > 80 && candidates.length > 0) {
     const side = candidates.reduce((best, p) =>
@@ -72,18 +98,17 @@ function generateDinner(mains: Product[], sides: Product[]): Product[] {
   const targetCal = PFC_TARGETS.calories * DINNER_RATIO;
   const items: Product[] = [];
 
-  const mainItems = pickN(mains, 1 + Math.floor(Math.random() * 2));
+  const mainItems = weightedPickNByProtein(mains, 1 + Math.floor(Math.random() * 2));
   items.push(...mainItems);
 
-  const sideItems = pickN(
-    sides.filter((s) => !items.includes(s)),
-    1 + Math.floor(Math.random() * 2),
-  );
+  const remainingSides = sides.filter((s) => !items.includes(s));
+  const sideItems = weightedPickNByProtein(remainingSides, 1 + Math.floor(Math.random() * 2));
   items.push(...sideItems);
 
   const total = items.reduce((s, p) => s + p.calories, 0);
-  if (total < targetCal * 0.5 && sides.length > 0) {
-    items.push(pick(sides.filter((s) => !items.includes(s))));
+  if (total < targetCal * 0.5) {
+    const extra = sides.filter((s) => !items.includes(s));
+    if (extra.length > 0) items.push(weightedPickByProtein(extra));
   }
 
   return items;
@@ -129,8 +154,8 @@ export function generateDailyPlan(): DailyPlan {
   }
 
   if (!bestPlan) {
-    const fallbackLunch = mains.length > 0 ? [pick(mains)] : [];
-    const fallbackDinner = mains.length > 1 ? pickN(mains, 2) : mains;
+    const fallbackLunch = mains.length > 0 ? [weightedPickByProtein(mains)] : [];
+    const fallbackDinner = mains.length > 1 ? weightedPickNByProtein(mains, 2) : mains;
     const allItems = [...fallbackLunch, ...fallbackDinner];
     bestPlan = {
       lunch: {
