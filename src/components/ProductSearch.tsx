@@ -69,14 +69,34 @@ export default function ProductSearch({ onSelect, disabled }: Props) {
           component="li"
           {...props}
           key={option.id}
-          sx={{ flexDirection: 'column', alignItems: 'stretch', py: 1 }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.5,
+            py: 0.75,
+          }}
         >
-          <Typography variant="body2" fontWeight={600}>
-            {option.name}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            ¥{option.price.toLocaleString()} · {option.calories}kcal · P{option.protein}g
-          </Typography>
+          <Box
+            component="img"
+            src={option.image_url || 'https://via.placeholder.com/48?text=No+Image'}
+            alt=""
+            sx={{
+              width: 48,
+              height: 48,
+              objectFit: 'cover',
+              borderRadius: 1,
+              flexShrink: 0,
+              bgcolor: 'action.hover',
+            }}
+          />
+          <Box sx={{ minWidth: 0, flex: 1 }}>
+            <Typography variant="body2" fontWeight={600} noWrap>
+              {option.name}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              ¥{option.price.toLocaleString()} · {option.calories}kcal · P{option.protein}g
+            </Typography>
+          </Box>
         </Box>
       )}
     />
