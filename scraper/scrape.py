@@ -10,7 +10,7 @@ import re
 import sys
 import time
 from pathlib import Path
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -47,14 +47,47 @@ def fetch(url: str) -> BeautifulSoup:
     return BeautifulSoup(r.text, "lxml")
 
 
+def get_listing_urls_for_category(category_name: str, category_path: str) -> list[str]:
+    """
+    カテゴリトップページを取得し、「ラインナップを見る」リンクから
+    サブカテゴリの一覧URLを収集する。なければカテゴリパスそのものを1件返す。
+    """
+    url = urljoin(BASE_URL, category_path)
+    try:
+        soup = fetch(url)
+    except Exception as e:
+        print(f"    ERROR fetching category top: {e}")
+        return [category_path]
+
+    listing_paths: list[str] = []
+    for a in soup.find_all("a", href=True):
+        text = a.get_text(strip=True)
+        href = a.get("href", "")
+        if "ラインナップを見る" in text and "/products/a/cat/" in href:
+            # 絶対URLの場合は path のみ取り出す
+            path = urlparse(href).path or href
+            path = path.rstrip("/") or path
+            if path and path not in listing_paths:
+                listing_paths.append(path)
+
+    if not listing_paths:
+        return [category_path]
+    return listing_paths
+
+
 def get_listing_items(category_name: str, path: str) -> list[dict]:
-    """カテゴリ一覧ページから商品の基本情報を取得"""
-    url = urljoin(BASE_URL, path)
+    """一覧ページ（ラインナップ）から商品の基本情報を取得。100件表示で全ページを巡回。"""
+    base_url = urljoin(BASE_URL, path).rstrip("/")
     items = []
     page = 1
 
     while True:
-        page_url = url if page == 1 else f"{url}{page}/l100/"
+        # 常に /1/l100/, /2/l100/ 形式で100件ずつ取得（ページネーションを確実に）
+        # 1ページ目で0件のときは、ラインナップ形式でないカテゴリ用にトップURLを試す
+        if page == 1:
+            page_url = f"{base_url}/1/l100/"
+        else:
+            page_url = f"{base_url}/{page}/l100/"
         print(f"  [{category_name}] page {page}: {page_url}")
 
         try:
@@ -64,6 +97,14 @@ def get_listing_items(category_name: str, path: str) -> list[dict]:
             break
 
         cards = soup.select(".list_inner")
+        if not cards and page == 1:
+            page_url = base_url + "/"
+            print(f"  [{category_name}] retry page 1 (no l100): {page_url}")
+            try:
+                soup = fetch(page_url)
+                cards = soup.select(".list_inner")
+            except Exception as e:
+                print(f"    ERROR: {e}")
         if not cards:
             break
 
@@ -94,12 +135,8 @@ def get_listing_items(category_name: str, path: str) -> list[dict]:
                 "category": category_name,
             })
 
-        next_link = soup.select_one('a[href*="/l100/"]:not(.active)')
-        pagination = soup.select(".pagination a, .pager a")
-        has_next = any(
-            a.get_text(strip=True) == str(page + 1) for a in pagination
-        )
-        if not has_next:
+        # 100件未満なら次ページなし
+        if len(cards) < 100:
             break
         page += 1
 
@@ -163,8 +200,15 @@ def main():
 
     for cat_name, cat_path in CATEGORIES.items():
         print(f"\n--- {cat_name} ---")
-        listings = get_listing_items(cat_name, cat_path)
-        print(f"  {len(listings)} 件の商品を検出")
+        listing_urls = get_listing_urls_for_category(cat_name, cat_path)
+        print(f"  取得する一覧URL: {len(listing_urls)} 件")
+        listings_by_id: dict[str, dict] = {}
+        for listing_path in listing_urls:
+            for item in get_listing_items(cat_name, listing_path):
+                if item.get("id") and item["id"] not in listings_by_id:
+                    listings_by_id[item["id"]] = item
+        listings = list(listings_by_id.values())
+        print(f"  {len(listings)} 件の商品を検出（重複除く）")
 
         for i, item in enumerate(listings):
             print(f"  [{i+1}/{len(listings)}] {item['name']}")
