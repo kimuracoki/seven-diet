@@ -7,8 +7,9 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import Header from './components/Header';
 import NutritionSummary from './components/NutritionSummary';
 import MealPlan from './components/MealPlan';
+import ProductSearch from './components/ProductSearch';
 import { generateDailyPlan, generateDailyPlanWithPinned } from './utils/mealPlanner';
-import type { DailyPlan } from './utils/types';
+import type { DailyPlan, Product } from './utils/types';
 
 export default function App() {
   const [plan, setPlan] = useState<DailyPlan>(() => generateDailyPlan());
@@ -46,6 +47,60 @@ export default function App() {
     }
   }, [pinnedLunch, pinnedDinner]);
 
+  const onSelectProductFromSearch = useCallback(
+    (product: Product) => {
+      let nextPlan: DailyPlan = plan;
+      let nextPinnedLunch = new Set(pinnedLunch);
+      let nextPinnedDinner = new Set(pinnedDinner);
+
+      const lunchUnpinned = plan.lunch.items.findIndex((_, i) => !pinnedLunch.has(i));
+      if (lunchUnpinned >= 0) {
+        nextPlan = {
+          ...plan,
+          lunch: {
+            ...plan.lunch,
+            items: plan.lunch.items.map((p, i) => (i === lunchUnpinned ? product : p)),
+            totals: plan.lunch.totals,
+          },
+        };
+        nextPinnedLunch = new Set(pinnedLunch).add(lunchUnpinned);
+      } else {
+        const dinnerUnpinned = plan.dinner.items.findIndex((_, i) => !pinnedDinner.has(i));
+        if (dinnerUnpinned >= 0) {
+          nextPlan = {
+            ...plan,
+            dinner: {
+              ...plan.dinner,
+              items: plan.dinner.items.map((p, i) => (i === dinnerUnpinned ? product : p)),
+              totals: plan.dinner.totals,
+            },
+          };
+          nextPinnedDinner = new Set(pinnedDinner).add(dinnerUnpinned);
+        } else {
+          nextPlan = {
+            ...plan,
+            lunch: {
+              ...plan.lunch,
+              items: plan.lunch.items.map((p, i) => (i === 0 ? product : p)),
+              totals: plan.lunch.totals,
+            },
+          };
+          nextPinnedLunch = new Set(pinnedLunch).add(0);
+        }
+      }
+
+      setPinnedLunch(nextPinnedLunch);
+      setPinnedDinner(nextPinnedDinner);
+      setPlan(
+        generateDailyPlanWithPinned(nextPlan, {
+          lunch: nextPinnedLunch,
+          dinner: nextPinnedDinner,
+        }),
+      );
+    },
+    [plan, pinnedLunch, pinnedDinner],
+  );
+
   const hasProducts = plan.lunch.items.length > 0 || plan.dinner.items.length > 0;
 
   return (
@@ -54,6 +109,9 @@ export default function App() {
       <Container maxWidth="sm" sx={{ pt: 2 }}>
         {hasProducts ? (
           <>
+            <Box sx={{ mb: 2 }}>
+              <ProductSearch onSelect={onSelectProductFromSearch} />
+            </Box>
             <NutritionSummary totals={plan.totals} />
             <MealPlan meal={plan.lunch} pinnedIndices={pinnedLunch} onTogglePin={togglePinLunch} />
             <MealPlan meal={plan.dinner} pinnedIndices={pinnedDinner} onTogglePin={togglePinDinner} />
