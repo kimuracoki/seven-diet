@@ -32,13 +32,32 @@ function weightedPickByProtein(arr: Product[]): Product {
   return arr[arr.length - 1];
 }
 
-function weightedPickNByProtein(arr: Product[], n: number): Product[] {
+/** 既に使っているカテゴリの商品は重みを下げて、同じものばかり選ばないようにする */
+function weightedPickByProteinWithVariety(arr: Product[], usedCategories: Set<string>): Product {
+  const categoryPenalty = 0.2;
+  const weights = arr.map((p) => {
+    const base = proteinDensity(p) + 0.05;
+    return usedCategories.has(p.category) ? base * categoryPenalty : base;
+  });
+  const total = weights.reduce((s, w) => s + w, 0);
+  if (total <= 0) return arr[Math.floor(Math.random() * arr.length)];
+  let r = Math.random() * total;
+  for (let i = 0; i < arr.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return arr[i];
+  }
+  return arr[arr.length - 1];
+}
+
+function weightedPickNByProtein(arr: Product[], n: number, usedCategories: Set<string> = new Set()): Product[] {
   const remaining = [...arr];
   const result: Product[] = [];
+  const categories = new Set(usedCategories);
   for (let i = 0; i < n && remaining.length > 0; i++) {
-    const picked = weightedPickByProtein(remaining);
+    const picked = weightedPickByProteinWithVariety(remaining, categories);
     result.push(picked);
     remaining.splice(remaining.indexOf(picked), 1);
+    categories.add(picked.category);
   }
   return result;
 }
@@ -79,6 +98,19 @@ function score(totals: NutritionTotals): number {
   return pUnder + fErr + cErr + calErr + fOver + cOver;
 }
 
+/** 同じカテゴリが重複するとペナルティ（サラダチキンばかりを避ける） */
+function categoryDiversityPenalty(items: Product[]): number {
+  const countByCat = new Map<string, number>();
+  for (const p of items) {
+    countByCat.set(p.category, (countByCat.get(p.category) ?? 0) + 1);
+  }
+  let penalty = 0;
+  for (const n of countByCat.values()) {
+    if (n > 1) penalty += (n - 1) * 3;
+  }
+  return penalty;
+}
+
 function generateLunch(mains: Product[], sides: Product[]): Product[] {
   const targetCal = PFC_TARGETS.calories * LUNCH_RATIO;
   const calFiltered = mains.filter((p) => p.calories < targetCal * 0.9);
@@ -88,13 +120,15 @@ function generateLunch(mains: Product[], sides: Product[]): Product[] {
 
   if (!mainItem) return [];
 
+  const usedCategories = new Set([mainItem.category]);
   const candidates = sides.filter((p) => p.calories < 300);
   const remaining = targetCal - mainItem.calories;
   if (remaining > 80 && candidates.length > 0) {
-    const side = candidates.reduce((best, p) =>
+    const side = weightedPickByProteinWithVariety(candidates, usedCategories);
+    const sideByCal = candidates.reduce((best, p) =>
       Math.abs(p.calories - remaining) < Math.abs(best.calories - remaining) ? p : best,
     );
-    return [mainItem, side];
+    return [mainItem, Math.random() < 0.6 ? side : sideByCal];
   }
   return [mainItem];
 }
@@ -104,18 +138,21 @@ function generateDinner(mains: Product[], sides: Product[], excludeNames: Set<st
   const availMains = mains.filter((p) => !excludeNames.has(p.name));
   const availSides = sides.filter((p) => !excludeNames.has(p.name));
   const items: Product[] = [];
+  const usedCategories = new Set<string>();
 
-  const mainItems = weightedPickNByProtein(availMains, 1 + Math.floor(Math.random() * 2));
+  const mainItems = weightedPickNByProtein(availMains, 1 + Math.floor(Math.random() * 2), usedCategories);
   items.push(...mainItems);
+  mainItems.forEach((p) => usedCategories.add(p.category));
 
   const remainingSides = availSides.filter((s) => !items.some((i) => i.name === s.name));
-  const sideItems = weightedPickNByProtein(remainingSides, 1 + Math.floor(Math.random() * 2));
+  const sideItems = weightedPickNByProtein(remainingSides, 1 + Math.floor(Math.random() * 2), usedCategories);
   items.push(...sideItems);
+  sideItems.forEach((p) => usedCategories.add(p.category));
 
   const total = items.reduce((s, p) => s + p.calories, 0);
   if (total < targetCal * 0.5) {
     const extra = availSides.filter((s) => !items.some((i) => i.name === s.name));
-    if (extra.length > 0) items.push(weightedPickByProtein(extra));
+    if (extra.length > 0) items.push(weightedPickByProteinWithVariety(extra, usedCategories));
   }
 
   return items;
@@ -142,7 +179,7 @@ function satisfiesTotalsRequirements(totals: NutritionTotals): boolean {
   );
 }
 
-/** タンパク質が不足している場合、PFC上限を超えない範囲で高タンパクの商品を追加する */
+/** タンパク質が不足している場合、PFC上限を超えない範囲で高タンパクの商品を追加する（候補の順序をランダム化して同じ商品ばかりにならないようにする） */
 function addItemsUntilMinProtein(
   items: Product[],
   pool: Product[],
@@ -153,10 +190,16 @@ function addItemsUntilMinProtein(
   const used = new Set(usedNames);
   let totals = sumTotals(result);
 
-  // タンパク質効率（g/kcal）が良い順で試し、カロリー・脂質・炭水化物の上限を超えないものだけ追加
-  const available = pool
-    .filter((p) => !used.has(p.name))
-    .sort((a, b) => proteinDensity(b) - proteinDensity(a));
+  const filtered = pool.filter((p) => !used.has(p.name));
+  const sorted = filtered.sort((a, b) => proteinDensity(b) - proteinDensity(a));
+  const topN = 30;
+  const head = sorted.slice(0, topN);
+  const rest = sorted.slice(topN);
+  for (let i = head.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [head[i], head[j]] = [head[j], head[i]];
+  }
+  const available = [...head, ...rest];
 
   for (const p of available) {
     if (totals.protein >= minProtein) break;
@@ -219,8 +262,12 @@ function pickForSlots(
   excludeNames: Set<string> = new Set(),
 ): Product[] {
   const usedNames = new Set(excludeNames);
+  const usedCategories = new Set<string>();
   for (let i = 0; i < originalItems.length; i++) {
-    if (pinnedIndices.has(i)) usedNames.add(originalItems[i].name);
+    if (pinnedIndices.has(i)) {
+      usedNames.add(originalItems[i].name);
+      usedCategories.add(originalItems[i].category);
+    }
   }
 
   const items = [...originalItems];
@@ -229,8 +276,9 @@ function pickForSlots(
     const cat = categorize(originalItems[i]);
     const pool = (cat === 'main' ? mains : sides).filter((p) => !usedNames.has(p.name));
     if (pool.length > 0) {
-      items[i] = weightedPickByProtein(pool);
+      items[i] = weightedPickByProteinWithVariety(pool, usedCategories);
       usedNames.add(items[i].name);
+      usedCategories.add(items[i].category);
     }
   }
   return items;
@@ -269,7 +317,7 @@ export function generateDailyPlanWithPinned(
 
     if (!satisfiesTotalsRequirements(totals)) continue;
 
-    const s = score(totals);
+    const s = score(totals) + categoryDiversityPenalty(allItems);
     if (s < bestScore) {
       bestScore = s;
       bestPlan = {
@@ -364,7 +412,7 @@ export function generateDailyPlan(): DailyPlan {
 
     if (!satisfiesTotalsRequirements(totals)) continue;
 
-    const s = score(totals);
+    const s = score(totals) + categoryDiversityPenalty(allItems);
     if (s < bestScore) {
       bestScore = s;
       bestPlan = {
@@ -393,8 +441,9 @@ export function generateDailyPlan(): DailyPlan {
     for (let attempt = 0; attempt < fallbackAttempts; attempt++) {
       const fallbackLunch = mains.length > 0 ? [weightedPickByProtein(mains)] : [];
       const usedNames = new Set(fallbackLunch.map((p) => p.name));
+      const lunchCats = new Set(fallbackLunch.map((p) => p.category));
       const remainingMains = mains.filter((p) => !usedNames.has(p.name));
-      let fallbackDinner = remainingMains.length > 0 ? weightedPickNByProtein(remainingMains, 2) : [];
+      let fallbackDinner = remainingMains.length > 0 ? weightedPickNByProtein(remainingMains, 2, lunchCats) : [];
       let allItems = [...fallbackLunch, ...fallbackDinner];
       for (const p of allItems) usedNames.add(p.name);
       allItems = addItemsUntilMinProtein(allItems, pool, usedNames, PROTEIN_MIN);
