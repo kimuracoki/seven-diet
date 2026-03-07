@@ -40,5 +40,8 @@ export const PFC_TARGETS = {
   carbs: 230,
 } as const;
 
+/** 一日のタンパク質の下限（これ未満のプランは採用しない） */
+export const PROTEIN_MIN = 120;
+
 export const LUNCH_RATIO = 0.32;
 export const DINNER_RATIO = 0.68;

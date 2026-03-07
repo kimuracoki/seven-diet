@@ -3,7 +3,7 @@ import type {
   DailyPlan,
   NutritionTotals,
 } from './types';
-import { PFC_TARGETS, LUNCH_RATIO, DINNER_RATIO } from './types';
+import { PFC_TARGETS, PROTEIN_MIN, LUNCH_RATIO, DINNER_RATIO } from './types';
 import productsData from '../data/products.json';
 
 const products = productsData as Product[];
@@ -126,6 +126,91 @@ export interface PinnedConfig {
   dinner: Set<number>;
 }
 
+/** 一日合計の要件（メイン・フォールバック共通） */
+const CAL_MIN = 1700;
+const CAL_MAX = 2000;
+const FAT_MAX = PFC_TARGETS.fat;
+const CARBS_MAX = PFC_TARGETS.carbs;
+
+function satisfiesTotalsRequirements(totals: NutritionTotals): boolean {
+  return (
+    totals.calories >= CAL_MIN &&
+    totals.calories <= CAL_MAX &&
+    totals.protein >= PROTEIN_MIN &&
+    totals.fat <= FAT_MAX &&
+    totals.carbs <= CARBS_MAX
+  );
+}
+
+/** タンパク質が不足している場合、PFC上限を超えない範囲で高タンパクの商品を追加する */
+function addItemsUntilMinProtein(
+  items: Product[],
+  pool: Product[],
+  usedNames: Set<string>,
+  minProtein: number,
+): Product[] {
+  const result = [...items];
+  const used = new Set(usedNames);
+  let totals = sumTotals(result);
+
+  // タンパク質効率（g/kcal）が良い順で試し、カロリー・脂質・炭水化物の上限を超えないものだけ追加
+  const available = pool
+    .filter((p) => !used.has(p.name))
+    .sort((a, b) => proteinDensity(b) - proteinDensity(a));
+
+  for (const p of available) {
+    if (totals.protein >= minProtein) break;
+    const nextCal = totals.calories + p.calories;
+    const nextFat = totals.fat + p.fat;
+    const nextCarbs = totals.carbs + p.carbs;
+    if (nextCal > CAL_MAX || nextFat > FAT_MAX || nextCarbs > CARBS_MAX) continue;
+    result.push(p);
+    used.add(p.name);
+    totals = {
+      calories: nextCal,
+      protein: totals.protein + p.protein,
+      fat: nextFat,
+      carbs: nextCarbs,
+      price: totals.price + p.price,
+    };
+  }
+  return result;
+}
+
+/** カロリーが不足している場合、脂質・炭水化物上限を超えない範囲で商品を追加する */
+function addItemsUntilMinCalories(
+  items: Product[],
+  pool: Product[],
+  usedNames: Set<string>,
+  minCalories: number,
+): Product[] {
+  const result = [...items];
+  const used = new Set(usedNames);
+  let totals = sumTotals(result);
+
+  const available = pool
+    .filter((p) => !used.has(p.name))
+    .sort((a, b) => a.fat + a.carbs - (b.fat + b.carbs)); // 脂質・炭水化物が少ない順
+
+  for (const p of available) {
+    if (totals.calories >= minCalories) break;
+    const nextCal = totals.calories + p.calories;
+    const nextFat = totals.fat + p.fat;
+    const nextCarbs = totals.carbs + p.carbs;
+    if (nextCal > CAL_MAX || nextFat > FAT_MAX || nextCarbs > CARBS_MAX) continue;
+    result.push(p);
+    used.add(p.name);
+    totals = {
+      calories: nextCal,
+      protein: totals.protein + p.protein,
+      fat: nextFat,
+      carbs: nextCarbs,
+      price: totals.price + p.price,
+    };
+  }
+  return result;
+}
+
 function pickForSlots(
   originalItems: Product[],
   pinnedIndices: Set<number>,
@@ -182,8 +267,7 @@ export function generateDailyPlanWithPinned(
 
     const totals = sumTotals(allItems);
 
-    if (totals.calories < 1700 || totals.calories > 2300) continue;
-    if (totals.carbs > PFC_TARGETS.carbs || totals.fat > PFC_TARGETS.fat) continue;
+    if (!satisfiesTotalsRequirements(totals)) continue;
 
     const s = score(totals);
     if (s < bestScore) {
@@ -207,21 +291,55 @@ export function generateDailyPlanWithPinned(
   }
 
   if (!bestPlan) {
-    const lunchItems = allPinnedLunch
-      ? currentPlan.lunch.items
-      : pickForSlots(currentPlan.lunch.items, pinned.lunch, mains, sides);
-    const lunchNames = new Set(lunchItems.map((p) => p.name));
-    const dinnerItems = allPinnedDinner
-      ? currentPlan.dinner.items
-      : pickForSlots(currentPlan.dinner.items, pinned.dinner, mains, sides, lunchNames);
-    const allItems = [...lunchItems, ...dinnerItems];
-    bestPlan = {
-      lunch: { type: 'lunch', label: '昼食（軽め）', items: lunchItems, totals: sumTotals(lunchItems) },
-      dinner: { type: 'dinner', label: '夕食（しっかり）', items: dinnerItems, totals: sumTotals(dinnerItems) },
-      totals: sumTotals(allItems),
-    };
+    let bestFallback: DailyPlan | null = null;
+    let bestFallbackProtein = 0;
+    const fallbackAttempts = 100;
+    for (let attempt = 0; attempt < fallbackAttempts; attempt++) {
+      const lunchItems = allPinnedLunch
+        ? currentPlan.lunch.items
+        : pickForSlots(currentPlan.lunch.items, pinned.lunch, mains, sides);
+      const lunchNames = new Set(lunchItems.map((p) => p.name));
+      let dinnerItems = allPinnedDinner
+        ? currentPlan.dinner.items
+        : pickForSlots(currentPlan.dinner.items, pinned.dinner, mains, sides, lunchNames);
+      let allItems = [...lunchItems, ...dinnerItems];
+      const usedNames = new Set(allItems.map((p) => p.name));
+      const pool = [...mains, ...sides];
+      allItems = addItemsUntilMinProtein(allItems, pool, usedNames, PROTEIN_MIN);
+      if (sumTotals(allItems).calories < CAL_MIN) {
+        allItems = addItemsUntilMinCalories(allItems, pool, usedNames, CAL_MIN);
+      }
+      const totals = sumTotals(allItems);
+      if (totals.protein >= PROTEIN_MIN) {
+        dinnerItems = allItems.slice(lunchItems.length);
+        bestPlan = {
+          lunch: { type: 'lunch', label: '昼食（軽め）', items: lunchItems, totals: sumTotals(lunchItems) },
+          dinner: { type: 'dinner', label: '夕食（しっかり）', items: dinnerItems, totals: sumTotals(dinnerItems) },
+          totals,
+        };
+        break;
+      }
+      if (totals.protein > bestFallbackProtein) {
+        bestFallbackProtein = totals.protein;
+        dinnerItems = allItems.slice(lunchItems.length);
+        bestFallback = {
+          lunch: { type: 'lunch', label: '昼食（軽め）', items: lunchItems, totals: sumTotals(lunchItems) },
+          dinner: { type: 'dinner', label: '夕食（しっかり）', items: dinnerItems, totals: sumTotals(dinnerItems) },
+          totals,
+        };
+      }
+    }
+    if (!bestPlan && bestFallback) bestPlan = bestFallback;
   }
 
+  if (!bestPlan) {
+    const emptyTotals: NutritionTotals = { calories: 0, protein: 0, fat: 0, carbs: 0, price: 0 };
+    bestPlan = {
+      lunch: { type: 'lunch', label: '昼食（軽め）', items: [], totals: emptyTotals },
+      dinner: { type: 'dinner', label: '夕食（しっかり）', items: [], totals: emptyTotals },
+      totals: emptyTotals,
+    };
+  }
   return bestPlan;
 }
 
@@ -244,8 +362,7 @@ export function generateDailyPlan(): DailyPlan {
 
     const totals = sumTotals(allItems);
 
-    if (totals.calories < 1700 || totals.calories > 2300) continue;
-    if (totals.carbs > PFC_TARGETS.carbs || totals.fat > PFC_TARGETS.fat) continue;
+    if (!satisfiesTotalsRequirements(totals)) continue;
 
     const s = score(totals);
     if (s < bestScore) {
@@ -269,27 +386,71 @@ export function generateDailyPlan(): DailyPlan {
   }
 
   if (!bestPlan) {
-    const fallbackLunch = mains.length > 0 ? [weightedPickByProtein(mains)] : [];
-    const usedNames = new Set(fallbackLunch.map((p) => p.name));
-    const remainingMains = mains.filter((p) => !usedNames.has(p.name));
-    const fallbackDinner = remainingMains.length > 0 ? weightedPickNByProtein(remainingMains, 2) : [];
-    const allItems = [...fallbackLunch, ...fallbackDinner];
-    bestPlan = {
-      lunch: {
-        type: 'lunch',
-        label: '昼食（軽め）',
-        items: fallbackLunch,
-        totals: sumTotals(fallbackLunch),
-      },
-      dinner: {
-        type: 'dinner',
-        label: '夕食（しっかり）',
-        items: fallbackDinner,
-        totals: sumTotals(fallbackDinner),
-      },
-      totals: sumTotals(allItems),
-    };
+    let bestFallback: DailyPlan | null = null;
+    let bestFallbackProtein = 0;
+    const pool = [...mains, ...sides];
+    const fallbackAttempts = 100;
+    for (let attempt = 0; attempt < fallbackAttempts; attempt++) {
+      const fallbackLunch = mains.length > 0 ? [weightedPickByProtein(mains)] : [];
+      const usedNames = new Set(fallbackLunch.map((p) => p.name));
+      const remainingMains = mains.filter((p) => !usedNames.has(p.name));
+      let fallbackDinner = remainingMains.length > 0 ? weightedPickNByProtein(remainingMains, 2) : [];
+      let allItems = [...fallbackLunch, ...fallbackDinner];
+      for (const p of allItems) usedNames.add(p.name);
+      allItems = addItemsUntilMinProtein(allItems, pool, usedNames, PROTEIN_MIN);
+      if (sumTotals(allItems).calories < CAL_MIN) {
+        allItems = addItemsUntilMinCalories(allItems, pool, usedNames, CAL_MIN);
+      }
+      const totals = sumTotals(allItems);
+      if (totals.protein >= PROTEIN_MIN) {
+        fallbackDinner = allItems.slice(fallbackLunch.length);
+        bestPlan = {
+          lunch: {
+            type: 'lunch',
+            label: '昼食（軽め）',
+            items: fallbackLunch,
+            totals: sumTotals(fallbackLunch),
+          },
+          dinner: {
+            type: 'dinner',
+            label: '夕食（しっかり）',
+            items: fallbackDinner,
+            totals: sumTotals(fallbackDinner),
+          },
+          totals,
+        };
+        break;
+      }
+      if (totals.protein > bestFallbackProtein) {
+        bestFallbackProtein = totals.protein;
+        fallbackDinner = allItems.slice(fallbackLunch.length);
+        bestFallback = {
+          lunch: {
+            type: 'lunch',
+            label: '昼食（軽め）',
+            items: fallbackLunch,
+            totals: sumTotals(fallbackLunch),
+          },
+          dinner: {
+            type: 'dinner',
+            label: '夕食（しっかり）',
+            items: fallbackDinner,
+            totals: sumTotals(fallbackDinner),
+          },
+          totals,
+        };
+      }
+    }
+    if (!bestPlan && bestFallback) bestPlan = bestFallback;
   }
 
+  if (!bestPlan) {
+    const emptyTotals: NutritionTotals = { calories: 0, protein: 0, fat: 0, carbs: 0, price: 0 };
+    bestPlan = {
+      lunch: { type: 'lunch', label: '昼食（軽め）', items: [], totals: emptyTotals },
+      dinner: { type: 'dinner', label: '夕食（しっかり）', items: [], totals: emptyTotals },
+      totals: emptyTotals,
+    };
+  }
   return bestPlan;
 }
