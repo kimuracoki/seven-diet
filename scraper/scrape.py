@@ -27,13 +27,21 @@ DELAY = 1.5
 
 CATEGORIES = {
     "おにぎり": f"/products/a/onigiri/{REGION}/",
+    "お寿司": f"/products/a/sushi/{REGION}/",
     "お弁当": f"/products/a/bento/{REGION}/",
     "サンドイッチ・ロールパン": f"/products/a/sandwich/{REGION}/",
-    "サラダ": f"/products/a/salad/{REGION}/",
-    "惣菜": f"/products/a/dailydish/{REGION}/",
     "パン": f"/products/a/bread/{REGION}/",
     "そば・うどん・中華麺": f"/products/a/men/{REGION}/",
     "スパゲティ・パスタ": f"/products/a/pasta/{REGION}/",
+    "グラタン・ドリア": f"/products/a/gratin/{REGION}/",
+    "惣菜": f"/products/a/dailydish/{REGION}/",
+    "サラダ": f"/products/a/salad/{REGION}/",
+    "冷凍食品": f"/products/a/frozen_foods/{REGION}/",
+    "チルド惣菜SP": f"/products/a/7premium/daily_dish/{REGION}/",
+    "生鮮SP": f"/products/a/7premium/fresh/{REGION}/",
+    "常温・加工食品SP": f"/products/a/7premium/process/{REGION}/",
+    "パン・シリアルSP": f"/products/a/7premium/bread/{REGION}/",
+    "冷凍食品SP": f"/products/a/7premium/frozen/{REGION}/",
 }
 
 OUT_DIR = Path(__file__).resolve().parent
